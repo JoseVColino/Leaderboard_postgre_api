@@ -4,6 +4,8 @@ from database import Base, engine, SessionLocal
 from models import Score
 app = FastAPI()
 
+Base.metadata.create_all(bind=engine)
+
 def get_db():
     db = SessionLocal()
     try:
