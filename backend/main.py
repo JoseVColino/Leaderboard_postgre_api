@@ -2,7 +2,6 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import Base, engine, SessionLocal
 from models import Score
-
 app = FastAPI()
 
 def get_db():
