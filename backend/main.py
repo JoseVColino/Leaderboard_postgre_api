@@ -2,7 +2,17 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import Base, engine, SessionLocal
 from models import Score
+from fastapi.middleware.cors import CORSMiddleware # so it can recieve requests from html5 in my itch.io page
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://victorcg50.itch.io/myfirstgodot2dgame"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 
