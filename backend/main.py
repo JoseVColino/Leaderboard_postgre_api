@@ -40,9 +40,24 @@ def submit_score(player_name:str, score:int, db:Session = Depends(get_db)):
             status_code= 400,
             detail='Player name too long (max 20 characters)'
         )
-    new_score = Score(player_name=player_name,score=score)
-    db.add(new_score)
+    
+    existing_score = db.query(Score).filter(Score.player_name == player_name).first()
+    if existing_score is None:
+        record_to_save = Score(player_name=player_name,score=score)
+        db.add(record_to_save)
+
+    else:
+        if existing_score.score < score:
+            existing_score.score = score
+            record_to_save = existing_score
+        else:
+            return {
+                'status': 'no change',
+                'detail': f'new score {score} is not higher than previous: {record_to_save.score} for player {player_name}'
+            }
+    
     db.commit()
+    db.refresh(record_to_save)
     return {'status': 'success', 'player_name': player_name, 'score': score}
 
 @app.get('/leaderboard/')
