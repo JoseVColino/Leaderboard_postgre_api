@@ -6,9 +6,14 @@ from fastapi.middleware.cors import CORSMiddleware # so it can recieve requests 
 
 app = FastAPI()
 
+origins = [
+    "https://html-classic.itch.zone",
+    "https://victorcg50.itch.io/myfirstgodot2dgame" 
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://victorcg50.itch.io/myfirstgodot2dgame"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
