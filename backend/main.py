@@ -42,6 +42,7 @@ def submit_score(player_name:str, score:int, db:Session = Depends(get_db)):
         )
     
     existing_score = db.query(Score).filter(Score.player_name == player_name).first()
+    record_to_save = None
     if existing_score is None:
         record_to_save = Score(player_name=player_name,score=score)
         db.add(record_to_save)
