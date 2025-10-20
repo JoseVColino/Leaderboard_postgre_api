@@ -54,7 +54,7 @@ def submit_score(player_name:str, score:int, db:Session = Depends(get_db)):
         else:
             return {
                 'status': 'no change',
-                'detail': f'new score {score} is not higher than previous: {record_to_save.score} for player {player_name}'
+                'detail': f'new score {score} is not higher than previous: {existing_score.score} for player {player_name}'
             }
     
     db.commit()
