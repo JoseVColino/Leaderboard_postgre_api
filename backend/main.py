@@ -40,6 +40,7 @@ def submit_score(player_name:str, score:int, db:Session = Depends(get_db)):
             status_code= 400,
             detail='Player name too long (max 20 characters)'
         )
+    player_name = player_name.strip()
     
     existing_score = db.query(Score).filter(Score.player_name == player_name).first()
     record_to_save = None
