@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import Base, engine, SessionLocal
 from models import Score
 from fastapi.middleware.cors import CORSMiddleware # so it can recieve requests from html5 in my itch.io page
+import re
 
 app = FastAPI()
 
@@ -35,7 +36,8 @@ def root():
 
 @app.post('/submit_score/')
 def submit_score(player_name:str, score:int, db:Session = Depends(get_db)):
-    player_name = player_name.strip().replace('\n','')
+    player_name = re.sub(r'[^\w\-\s]','',player_name,flags=re.UNICODE).strip()
+    
     if len(player_name) > 20:
         raise HTTPException(
             status_code= 400,
