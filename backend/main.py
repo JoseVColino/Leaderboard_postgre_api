@@ -35,7 +35,7 @@ def root():
 
 @app.post('/submit_score/')
 def submit_score(player_name:str, score:int, db:Session = Depends(get_db)):
-    player_name = player_name.strip()
+    player_name = player_name.strip().replace('\n','')
     if len(player_name) > 20:
         raise HTTPException(
             status_code= 400,
