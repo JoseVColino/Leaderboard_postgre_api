@@ -39,10 +39,7 @@ def submit_score(player_name:str, score:int, db:Session = Depends(get_db)):
     player_name = re.sub(r'[^\w\- ]','',player_name,flags=re.UNICODE).strip()
     
     if len(player_name) > 20:
-        raise HTTPException(
-            status_code= 400,
-            detail='Player name too long (max 20 characters)'
-        )
+        player_name = player_name[:20]
     if len(player_name) < 1:
         raise HTTPException(
             status_code= 400,
